@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MINE SHIELD Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #101820;
+            color: white;
+        }
+
+        header {
+            background: #17232D;
+            text-align: center;
+            padding: 18px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        header p {
+            margin: 6px;
+            color: #B8C7D1;
+        }
+
+        .mode {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 5px 12px;
+            background: #263746;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: #17232D;
+            border: 1px solid #34495E;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .camera {
+            height: 230px;
+            background: #263746;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 22px;
+        }
+
+        .sensor {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            margin: 8px 0;
+            background: #263746;
+            border-radius: 5px;
+        }
+
+        .active {
+            color: #00FF88;
+            font-weight: bold;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .data {
+            background: #263746;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .data-title {
+            color: #B8C7D1;
+            font-size: 13px;
+        }
+
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .risk {
+            margin-top: 20px;
+            padding: 18px;
+            text-align: center;
+            background: #263746;
+            border-radius: 6px;
+        }
+
+        #risk {
+            font-size: 28px;
+            font-weight: bold;
+            color: orange;
+        }
+
+        footer {
+            margin-top: 20px;
+            background: #17232D;
+            padding: 15px;
+            text-align: center;
+            color: #B8C7D1;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛡️ MINE SHIELD</h1>
+    <p>AI-BASED MINE VEHICLE SAFETY SYSTEM</p>
+    <span class="mode">SIMULATION / TEST MODE</span>
+</header>
+
+<div class="container">
+
+    <div class="grid">
+
+        <!-- CAMERA -->
+        <div class="panel">
+            <h2>📷 CAMERA / YOLO DETECTION</h2>
+
+            <div class="camera">
+                <div>
+                    LIVE CAMERA<br><br>
+                    🚚 VEHICLE DETECTED<br><br>
+                    YOLO Confidence: <b>94.2%</b>
+                </div>
+            </div>
+        </div>
+
+        <!-- SENSOR STATUS -->
+        <div class="panel">
+            <h2>📡 SENSOR STATUS</h2>
+
+            <div class="sensor">
+                <span>Camera / Vision</span>
+                <span class="active">● ACTIVE</span>
+            </div>
+
+            <div class="sensor">
+                <span>LiDAR</span>
+                <span class="active">● ACTIVE</span>
+            </div>
+
+            <div class="sensor">
+                <span>Radar</span>
+                <span class="active">● ACTIVE</span>
+            </div>
+
+            <div class="sensor">
+                <span>GPS / GNSS</span>
+                <span class="active">● ACTIVE</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- REAL TIME DATA -->
+    <div class="data-grid">
+
+        <div class="data">
+            <div class="data-title">LiDAR Distance</div>
+            <div class="value" id="lidar">18.6 m</div>
+        </div>
+
+        <div class="data">
+            <div class="data-title">Radar Distance</div>
+            <div class="value" id="radar">19.1 m</div>
+        </div>
+
+        <div class="data">
+            <div class="data-title">Relative Speed</div>
+            <div class="value" id="speed">-2.8 m/s</div>
+        </div>
+
+        <div class="data">
+            <div class="data-title">TTC</div>
+            <div class="value" id="ttc">3.8 s</div>
+        </div>
+
+    </div>
+
+    <!-- RISK -->
+    <div class="risk">
+        <div>⚠️ RISK ASSESSMENT</div>
+        <div id="risk">WARNING</div>
+    </div>
+
+</div>
+
+<footer>
+    GPS: 19.5847° N, 74.2967° E &nbsp; | &nbsp;
+    DATABASE: RECORDING
+</footer>
+
+
+<script>
+
+function updateData() {
+
+    let lidar = (15 + Math.random() * 15).toFixed(1);
+
+    let radar =
+        (parseFloat(lidar) + 0.3 + Math.random() * 1.2).toFixed(1);
+
+    let speed =
+        (-1 - Math.random() * 3).toFixed(1);
+
+    let ttc =
+        (parseFloat(lidar) / Math.abs(parseFloat(speed))).toFixed(1);
+
+    document.getElementById("lidar").innerText =
+        lidar + " m";
+
+    document.getElementById("radar").innerText =
+        radar + " m";
+
+    document.getElementById("speed").innerText =
+        speed + " m/s";
+
+    document.getElementById("ttc").innerText =
+        ttc + " s";
+}
+
+setInterval(updateData, 1000);
+
+</script>
+
+</body>
+</html>
